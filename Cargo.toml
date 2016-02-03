@@ -1,0 +1,8 @@
+[package]
+name = "proquint"
+version = "0.1.0"
+authors = ["raf"]
+
+[[bin]]
+name = "proquint"
+doc = false
