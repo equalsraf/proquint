@@ -279,18 +279,21 @@ fn test_proquint_u16() {
     assert_eq!(s, "babad");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [ 1]);
+    assert_eq!(p.to_bytes(), [0, 1]);
 
     let p = 0u16.as_proquint();
     let s = p.to_string();
     assert_eq!(s, "babab");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [0]);
+    assert_eq!(p.to_bytes(), [0, 0]);
 
     let p = 0xffffu16.as_proquint();
     let s = p.to_string();
     assert_eq!(s, "zuzuz");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [0xffff]);
+    assert_eq!(p.to_bytes(), [0xff, 0xff]);
 }
 
 #[test]
@@ -300,12 +303,14 @@ fn test_proquint_u32() {
     assert_eq!(s, "babab-babad");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [0, 1]);
+    assert_eq!(p.to_bytes(), [0, 0, 0, 1]);
 
     let p = 0u32.as_proquint();
     let s = p.to_string();
     assert_eq!(s, "babab-babab");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [0, 0]);
+    assert_eq!(p.to_bytes(), [0, 0, 0, 0]);
 }
 
 #[test]
@@ -315,12 +320,14 @@ fn test_proquint_u64() {
     assert_eq!(s, "babab-babab-babab-babad");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [0, 0, 0, 1]);
+    assert_eq!(p.to_bytes(), [0, 0, 0, 0, 0, 0, 0, 1]);
 
     let p = 0u64.as_proquint();
     let s = p.to_string();
     assert_eq!(s, "babab-babab-babab-babab");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [0, 0, 0, 0]);
+    assert_eq!(p.to_bytes(), [0, 0, 0, 0, 0, 0, 0, 0]);
 }
 
 #[test]
@@ -330,6 +337,7 @@ fn test_proquint_vec() {
     assert_eq!(s, "babab-babad");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
     assert_eq!(p.to_ints(), [0u16, 1]);
+    assert_eq!(p.to_bytes(), [0, 0, 0, 1]);
 }
 
 #[test]
@@ -338,58 +346,73 @@ fn test_proquint_from_ip() {
     let s = p.to_string();
     assert_eq!(s, "lusab-babad");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [127, 0, 0, 1]);
 
     let p = Ipv4Addr::from_str("63.84.220.193").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "gutih-tugad");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [63, 84, 220, 193]);
 
     let p = Ipv4Addr::from_str("63.118.7.35").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "gutuk-bisog");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [63, 118, 7, 35]);
 
     let p = Ipv4Addr::from_str("140.98.193.141").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "mudof-sakat");
+    assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [140, 98, 193, 141]);
 
     let p = Ipv4Addr::from_str("64.255.6.200").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "haguz-biram");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [64, 255, 6, 200]);
 
     let p = Ipv4Addr::from_str("128.30.52.45").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "mabiv-gibot");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [128, 30, 52, 45]);
 
     let p = Ipv4Addr::from_str("147.67.119.2").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "natag-lisaf");
+    assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [147, 67, 119, 2]);
 
     let p = Ipv4Addr::from_str("212.58.253.68").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "tibup-zujah");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [212, 58, 253, 68]);
 
     let p = Ipv4Addr::from_str("216.35.68.215").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "tobog-higil");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [216, 35, 68, 215]);
 
     let p = Ipv4Addr::from_str("216.68.232.21").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "todah-vobij");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [216, 68, 232, 21]);
 
     let p = Ipv4Addr::from_str("198.81.129.136").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "sinid-makam");
     assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [198, 81, 129, 136]);
 
     let p = Ipv4Addr::from_str("12.110.110.204").unwrap().as_proquint();
     let s = p.to_string();
     assert_eq!(s, "budov-kuras");
+    assert_eq!(p, Proquint::from_str(&s).unwrap());
+    assert_eq!(p.to_bytes(), [12, 110, 110, 204]);
 }
 
 #[test]
