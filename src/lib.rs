@@ -119,10 +119,16 @@ impl Proquint {
         Ok(())
     }
 
-//    /// Convert Proquint to bytes
-//    pub fn to_bytes(&self) -> Vec<u8> {
-//        self.to_ints().iter()
-//    }
+    /// Convert Proquint to bytes
+    pub fn to_bytes(&self) -> Vec<u8> {
+        let ints = self.to_ints();
+        let mut out = Vec::with_capacity(ints.len()*2);
+        for int in ints {
+            out.push(((int & 0xff00) >> 8) as u8);
+            out.push((int & 0x00ff) as u8);
+        }
+        out
+    }
 
     /// Convert a Proquint to binary
     pub fn to_ints(&self) -> Vec<u16> {
